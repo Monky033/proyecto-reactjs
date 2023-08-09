@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
-function BurguerB() {
+function BurguerB(props) {
   return (
     <Burguer>
-      <div className="icon nav-icon-5">
+      <div
+        onClick={props.handleClick}
+        className={`icon nav-icon-5 ${props.clicked ? `open` : ``}`}
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -14,7 +17,7 @@ function BurguerB() {
 
 export default BurguerB;
 
-const Burguer = styled.nav`
+const Burguer = styled.div`
   .nav-icon-5 {
     width: 35px;
     height: 30px;
