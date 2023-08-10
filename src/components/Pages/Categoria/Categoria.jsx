@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductos } from "../../../lib/dat";
 import { ItemLisContainer } from "../../ItemLisContainer/ItemLisContainer";
-
+import "./Categoria.css";
 export const Categoria = () => {
   const { id } = useParams();
   const [products, setProducts] = useState([]);
