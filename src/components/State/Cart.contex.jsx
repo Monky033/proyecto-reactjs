@@ -32,7 +32,7 @@ export const CartProvider = ({ children }) => {
   );
 
   const getTotalPrice = useMemo(
-    () => cart.reduce((acc, item) => acc + item.price * item.qty, 0),
+    () => cart.reduce((acc, item) => acc + item.precio * item.qty, 0),
     [cart]
   );
 

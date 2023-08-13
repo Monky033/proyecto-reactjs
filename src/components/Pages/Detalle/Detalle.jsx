@@ -50,7 +50,7 @@ export const Detalle = () => {
           </span>
 
           <ItemCount
-            stock={producto.cantidad - (itemInCart?.(+id)?.qty || 0)}
+            stock={producto.cantidad - (itemInCart?.(id)?.qty || 0)}
             onAdd={handleAdd}
           />
         </div>

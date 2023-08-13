@@ -126,8 +126,8 @@ import {
   getDocs,
   where,
   query,
+  doc,
   getDoc,
-  addDoc,
 } from "firebase/firestore";
 import { db } from "./Configuracion";
 
@@ -159,4 +159,25 @@ export const getproducto = async (id) => {
     return { id: documentoSnap.id, ...documentoSnap.data() };
 
   return null;
+};
+
+export const leerProduc = async (id, item) => {
+  const newBook = await updateDoc(doc(db, "items", id), item);
+  return;
+};
+
+export const borrarProduc = async (id) => {
+  return await deleteDoc(doc(db, "items", id));
+};
+
+export const actualizaProduc = async (items) => {
+  const batch = writeBatch(db);
+
+  items.forEach(({ id, qty }) => {
+    batch.update(doc(db, "items", id), {
+      stock: increment(-qty),
+    });
+  });
+
+  batch.commit();
 };

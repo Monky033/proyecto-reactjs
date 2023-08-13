@@ -1,13 +1,55 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useCartContext } from "../../State/Cart.contex";
 import { AiOutlineDelete } from "react-icons/ai";
+import { addOrden } from "../../../lib/ordenCompra";
+import { LocaleString } from "../../LocaleString/LocaleString";
+import { Input } from "../../Input/Input";
+import { actualizaProduc } from "../../../lib/dat";
+import "./Cart.scss";
+
+const BUY_FORM = [
+  { label: "Nombre", name: "name", placeholder: "Escribe tu nombre" },
+  { label: "Correo", name: "email", placeholder: "Escribe tu email" },
+  { label: "Repite correo", name: "email2", placeholder: "Repite tu email" },
+  { label: "Teléfono", name: "phone", placeholder: "Escribe tu teléfono" },
+];
 
 export const Cart = () => {
+  const [form, setForm] = useState({});
+
   const { cart, cleanCart, getTotalPrice, removeProduct } = useCartContext();
 
-  useEffect(() => {
-    console.log({ cart });
-  }, [cart]);
+  const createOrder = async () => {
+    const items = cart.map(({ id, nombre, qty, precio }) => ({
+      id,
+      nombre,
+      qty,
+      precio,
+    }));
+
+    const { nombre, celular, mail } = form;
+
+    const order = {
+      buyer: { nombre, celular, mail },
+      items,
+      total: getTotalPrice,
+    };
+
+    console.log({ order });
+    const id = await addOrden(order);
+    console.log(id);
+
+    await actualizaProduc(items);
+
+    cleanCart();
+  };
+
+  const handleChange = ({ target: { value, name } }) => {
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
 
   return (
     <div className="cart">
@@ -31,22 +73,11 @@ export const Cart = () => {
               </div>
               {cart.map((item) => (
                 <div className="cart__item" key={item.id}>
-                  <span>{item.title}</span>
+                  <span>{item.nombre}</span>
                   <span>{item.qty}</span>
-                  <span>
-                    $
-                    {item.precio.toLocaleString("es-AR", {
-                      maximumFractionDigits: 2,
-                      minimumFractionDigits: 2,
-                    })}
-                  </span>
-                  <span>
-                    $
-                    {(item.qty * item.precio).toLocaleString("es-AR", {
-                      maximumFractionDigits: 2,
-                      minimumFractionDigits: 2,
-                    })}
-                  </span>
+                  <LocaleString num={item.precio} />
+                  <LocaleString num={item.qty * item.precio} />
+
                   <button
                     className="cart__item-delete"
                     onClick={() => removeProduct(item.id)}
@@ -58,15 +89,19 @@ export const Cart = () => {
             </div>
             <div className="cart__item" style={{ border: "none" }}>
               <div className="cart__total">
-                <span>Total</span>{" "}
-                <span>
-                  $
-                  {getTotalPrice.toLocaleString("es-AR", {
-                    maximumFractionDigits: 2,
-                    minimumFractionDigits: 2,
-                  })}
-                </span>
+                <span>Total</span> <LocaleString num={getTotalPrice} />
               </div>{" "}
+            </div>
+            <div className="form">
+              {BUY_FORM.map((input) => (
+                <Input key={input.title} onChange={handleChange} {...input} />
+              ))}
+              <button
+                className="cart__item-button form__button"
+                onClick={createOrder}
+              >
+                Realizar pedido
+              </button>
             </div>
           </>
         ) : (
