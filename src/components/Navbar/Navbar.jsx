@@ -21,7 +21,7 @@ export default function Navbar() {
           <NavLink to="/">INICIO</NavLink>
           <NavLink to="/Categoria/robado">ROBADOS</NavLink>
           <NavLink to="/Categoria/perdido">PERDIDOS</NavLink>
-          <a href="">CONTACTTOS</a>
+          <NavLink to="/Contactos">CONTACTOS</NavLink>
           <CartNum />
         </div>
 

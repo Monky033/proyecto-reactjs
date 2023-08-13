@@ -121,25 +121,42 @@ const COMPUTADORAS = [
   },
 ];
 
-export const getProductos = (id) => {
-  const _productos = id
-    ? COMPUTADORAS.filter((producto) => producto.category.toLowerCase() === id)
-    : COMPUTADORAS;
-  return new Promise((res) => {
-    setTimeout(() => {
-      res(_productos);
-    }, 1000);
+import {
+  collection,
+  getDocs,
+  where,
+  query,
+  getDoc,
+  addDoc,
+} from "firebase/firestore";
+import { db } from "./Configuracion";
+
+const productosRef = collection(db, "items");
+
+export const getProductos = async (category) => {
+  const q = category
+    ? query(productosRef, where("category", "==", category))
+    : productosRef;
+
+  let productosDoc = [];
+  const querrySnapshot = await getDocs(q);
+  querrySnapshot.forEach((doc) => {
+    productosDoc = [...productosDoc, { ...doc.data(), id: doc.id }];
   });
+  return productosDoc;
+  /*
+  return new Promise((res) => {
+    //setTimeout(() => {
+      //res(_productos);
+    //}, 1000);
+  });*/
 };
 
-export const getproducto = (id) => {
-  const computadora = COMPUTADORAS.filter(
-    (computadora) => computadora.id === id
-  )[0];
+export const getproducto = async (id) => {
+  const documento = doc(db, "items", id);
+  const documentoSnap = await getDoc(documento);
+  if (documentoSnap.exists())
+    return { id: documentoSnap.id, ...documentoSnap.data() };
 
-  return new Promise((res) => {
-    setTimeout(() => {
-      res(computadora);
-    }, 1000);
-  });
+  return null;
 };

@@ -10,12 +10,14 @@ import { Cart } from "./components/Pages/Cart/Cart";
 import { Categoria } from "./components/Pages/Categoria/Categoria";
 import { Detalle } from "./components/Pages/Detalle/Detalle";
 import { CartProvider } from "./components/State/Cart.contex";
+import { Contactos } from "./components/Contacto/Contacto";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Navbar />}>
       <Route path="/" element={<Home />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/Contactos" element={<Contactos />} />
       <Route path="/item/:id" element={<Detalle />} />
       <Route path="/Categoria/:id" element={<Categoria />} />
     </Route>

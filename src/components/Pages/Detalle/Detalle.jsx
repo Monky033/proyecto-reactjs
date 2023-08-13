@@ -1,17 +1,20 @@
 import { ItemCount } from "../../ItemCount/ItemCount";
 import { useEffect, useState, useCallback } from "react";
 import { getproducto } from "../../../lib/dat";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Detalle.scss";
 import { useCartContext } from "../../State/Cart.contex";
 
 export const Detalle = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [producto, setproducto] = useState({});
+
   const { addProduct, itemInCart } = useCartContext();
 
   useEffect(() => {
-    getproducto(+id).then((res) => {
+    getproducto(id).then((res) => {
+      if (!res) return navigate("/");
       setproducto(res);
     });
   }, []);
