@@ -39,6 +39,7 @@ const Stilo = styled.nav`
   h2 {
     color: white;
     font-weight: 400;
+    background-color: #333;
   }
   padding: 0.4rem;
   background-color: #333;
@@ -55,6 +56,7 @@ const Stilo = styled.nav`
   .alineadoNavbar {
     display: flex;
   }
+
   .enlaces {
     display: flex;
 
@@ -66,7 +68,9 @@ const Stilo = styled.nav`
     margin-right: auto;
     text-align: center;
     transition: all 0.5s ease;
+    background-color: #333;
     a {
+      background-color: #333;
       color: white;
       font-size: 2rem;
       display: block;

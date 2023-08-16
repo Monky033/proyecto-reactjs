@@ -5,6 +5,7 @@ import { addOrden } from "../../../lib/ordenCompra";
 import { LocaleString } from "../../LocaleString/LocaleString";
 import { Input } from "../../Input/Input";
 import { actualizaProduc } from "../../../lib/dat";
+import { OnlyCount } from "../../OnlyCount/OnlyCount";
 import "./Cart.scss";
 
 const BUY_FORM = [
@@ -77,7 +78,7 @@ export const Cart = () => {
                   <span>{item.qty}</span>
                   <LocaleString num={item.precio} />
                   <LocaleString num={item.qty * item.precio} />
-
+                  <OnlyCount />
                   <button
                     className="cart__item-delete"
                     onClick={() => removeProduct(item.id)}

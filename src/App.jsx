@@ -10,7 +10,7 @@ import { Cart } from "./components/Pages/Cart/Cart";
 import { Categoria } from "./components/Pages/Categoria/Categoria";
 import { Detalle } from "./components/Pages/Detalle/Detalle";
 import { CartProvider } from "./components/State/Cart.contex";
-import { Contactos } from "./components/Contacto/Contacto";
+import { Contactos } from "./components/Pages/Contacto/Contacto";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
